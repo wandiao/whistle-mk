@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Whistle插件</title>
+  <script src="./js/lib/axois/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <link rel="stylesheet" href="./js/lib/element-ui/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="./js/lib/element-ui/index.js"></script>
+  <link href="./css/index.css" rel="stylesheet"></link>
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- <h1>mock panel</h1> -->
+    <hr />
+    <div class="flex-sb mb-16">
+      <el-select v-model="currHost" placeholder="请选择域名" style="width: 250px;">
+        <el-option :key="item.name" v-for="item in apis" :value="item.name">{{item.name}}</el-option>
+      </el-select>
+      <div>
+        <el-button @click="getData" type="primary">刷新</el-button>
+        <!-- <el-button type="danger">清空数据</el-button> -->
+      </div>
+    </div>
+
+    <el-collapse v-if="currApis" v-model="currApi">
+      <el-collapse-item v-for="(item, index) in currApis.apis" :key="index" :title="item.name | decode" :name="item.name | decode">
+        <div style="margin-bottom: 10px;">
+          <div class="flex" style="margin-bottom: 10px;">
+            <b>是否启用：</b>
+            <el-switch
+              @change="changeData(item)"
+              v-model="item.data.mock"
+              active-color="#13ce66"
+              inactive-color="#ff4949">
+            </el-switch>
+          </div>
+          <div class="flex">
+            <b>请求延迟：</b>
+            <el-input placehoder="单位（ms）" @change="changeData(item)" size="small" style="width: 120px" v-model="item.data.delay"></el-input>
+          </div>
+
+        </div>
+        <el-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 20}"
+        placeholder="请输入内容"
+        @input="item.data.res.body = $event"
+        @change="changeData(item)"
+        :value="item.data.res.body | formatJson">
+      </el-collapse-item>
+    </el-collapse>
+  </div>
+  <script src="./js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.mb-16 {
+  margin-bottom: 16px;
+}
+.container {
+  width: 1200px;
+  max-height: 100%;
+  margin: auto;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-sb {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

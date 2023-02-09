@@ -1,0 +1,61 @@
+@spacingList: 5, 10, 15, 20, 25, 30, 45, 40;
+@directionShort: l, r, t, b;
+@direction: left, right, top, bottom;
+
+
+.generSpacingDirection(@j,@i) when (@j < length(@direction)+1) {
+    .spacing(extract(@directionShort, @j), extract(@direction, @j), extract(@spacingList, @i));
+    .generSpacingDirection(@j+1, @i);
+}
+.generSpacing(@i) when (@i < length(@spacingList)+1) {
+    .spacingUnit(extract(@spacingList, @i));
+    .generSpacingDirection(1, @i);
+    .generSpacing(@i+1);
+}
+
+.spacingUnit(@size) {
+    .p-@{size} {
+        padding: unit(@size, px);
+    }
+    .px-@{size} {
+        padding-left: unit(@size, px);
+        padding-right: unit(@size, px);
+    }
+    .py-@{size} {
+        padding-top: unit(@size, px);
+        padding-bottom: unit(@size, px);
+    }
+    .m-@{size} {
+        margin: unit(@size, px);
+    }
+    .mx-@{size} {
+        margin-left: unit(@size, px);
+        margin-right: unit(@size, px);
+    }
+    .my-@{size} {
+        margin-top: unit(@size, px);
+        margin-bottom: unit(@size, px);
+    }
+}
+.spacing(@directionShort,@direction,@size) {
+    .p@{directionShort}-@{size} {
+        padding-@{direction}: unit(@size, px);
+    }
+
+    .m@{directionShort}-@{size} {
+        margin-@{direction}: unit(@size, px);
+    }
+}
+
+.generSpacing(1);
+
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.flex-sb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
